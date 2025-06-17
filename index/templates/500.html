@@ -1,0 +1,42 @@
+{% extends 'index/base.html' %}
+
+{% block style %}
+
+body{
+  background-color:#EEEEEE;
+}
+
+.container{
+  text-align:center;
+}
+
+h2{
+  margin-bottom:20px;
+  font-weight:bold;
+  color:black;
+}
+
+img{
+  margin-bottom:6%;
+  width:50%;
+  border-radius:10px;
+}
+
+@media only screen and (max-width:768px){
+  img{
+    margin-bottom:57%;
+  }
+}
+
+{% endblock %}
+
+{% block head %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block content %}
+<h2>Page not found</h2>
+<a href="https://en.wikipedia.org/wiki/Edward_Snowden">
+  <img src="https://i.imgur.com/WmKipXV.jpg">
+</a>
+{% endblock %}

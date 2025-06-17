@@ -1,0 +1,55 @@
+{% extends 'index/base.html' %}
+
+{% block title %}Changelog - qane{% endblock %}
+{% block description %}Changelog of qane{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block style %}
+h1{
+    color:#444;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.changelog{
+    box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+    padding:20px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    max-width:1000px;
+}
+{% endblock %}
+
+{% block content %}
+
+<div class="changelog">
+    <h1>Changelog</h1>
+    <p>June 2022 - First huge update🐋:</p>
+    <ul>
+        <li>New design</li>
+        <li>Removed pages /all, /trending, /latest and /contact</li>
+        <li>Captcha added on comments due to massive amounts of spam</li>
+        <li>Infinite scrolling added on the front page</li>
+        <li>Minor bug fixes</li>
+    </ul>
+    <hr>
+    <p>August 2021 - Some minor changes🤏:</p>
+    <ul>
+        <li>New cleaner design</li>
+        <li>Hundreds of low quality questions and comments deleted</li>
+        <li>Rich results added (SEO)</li>
+        <li>Many low quality comments updated to be of higher quality</li>
+        <li>Hundreds of IPs blocked due to spam</li>
+    </ul>
+    <hr>
+    <p>9 October 2020 - Qane launched👶:</p>
+    <ul>
+        <li>First day of qane being launched</li>
+    </ul>
+</div>
+{% endblock %}

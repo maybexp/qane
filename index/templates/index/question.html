@@ -1,0 +1,259 @@
+{% extends 'index/base.html' %}
+
+{% block title %}{{question.questionTitle}} - qane{% endblock %}
+{% block description %}{{comment.first}}{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block style %}
+
+h1{
+  font-size:30px;
+  color:#444;
+}
+
+.col-sm-8{
+  word-wrap:break-word;
+}
+
+.acceptedAnswer{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+  padding:10px 10px 20px 10px;
+  margin-bottom:20px;
+}
+
+.suggestedAnswers{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+  padding:10px 10px 35px 10px;
+  margin-bottom:20px;
+}
+
+#createComment{
+  margin-top:5%;
+  background-color:#F7F7F8;
+  width:80%;
+  box-shadow: 0 0 1px rgba(34, 25, 25, 1);
+}
+
+
+#commentText{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+  resize:none;
+  margin-bottom:5px;
+  border-radius:0px;
+  border:none;
+}
+
+.verifiedUser{
+  color:#1DA1F2;
+  cursor:pointer;
+}
+
+.verifiedUser small{
+  font-weight:bold;
+}
+
+.checkmark{
+  display:inline-block;
+}
+
+.captcha{
+  margin-left:10px;
+}
+
+.commentButton{
+  max-width:100px;
+  margin:10px;
+  background-color:#FE2C55;
+  color:white;
+  border-radius:20px;
+}
+
+.user{
+  color:#657786;
+}
+
+.commentTimestamp{
+  font-size:8px;
+  margin-bottom:10px;
+  color:#657786;
+}
+
+.commentButton:hover{
+  color:#d5d5d5;
+  background-color:#c30127;
+}
+
+
+.questions{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+  border-radius:0px;
+  margin:5px 5px 15px 0px;
+  cursor:pointer;
+  display:block;
+  word-wrap:break-word;
+  padding:10px 10px 0px 10px;
+}
+
+.questions:hover{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 1);
+}
+
+.answerCount{
+  color:#657786;
+}
+
+h2{
+  font-family:Cursive;
+  color:#2E3C57;
+}
+
+.col-sm-4{
+  margin-bottom:50px;
+}
+
+.moreLinks{
+  background-color:#F8F9FA;
+  padding:10px;
+  border:1px solid #e2e2e2;
+  border-radius:10px;
+}
+
+.moreLinks a{
+  color:black;
+}
+
+.search{
+  width:50%;
+  height:30px;
+}
+
+.search:focus{
+  box-shadow:none;
+}
+
+.questionTitle:hover{
+  text-decoration-line:none;
+}
+
+{% endblock %}
+
+{% block mobilefriendly %}
+#createComment{
+  margin-left:auto;
+  margin-right:auto;
+  width:90%;
+}
+
+{% endblock %}
+
+{% block bodyClass %}itemscope itemtype="https://schema.org/QAPage"{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question" class="col-sm-8">
+    <div class="acceptedAnswer">
+      <h1 itemprop="name">{{question.questionTitle}}</h1>
+      <p class="answerCount"><i><small><span itemprop="answerCount">{{comment.count}}</span> answers</small></i></p>
+      <time itemprop="dateCreated" datetime="{{question.timestamp|date:'d N Y'}}"></time>
+      <hr>
+       <!-- First -->
+      {% for i in comment|slice:':1' %}
+        <div class="">
+          {% if i.verifiedUser|lower == 'anonymous' %}
+          <a><small class="user">{{i.verifiedUser}}</small></a>
+          {% else %}
+          <div class="verifiedUser" onclick="window.location.href='{{i.verifiedUser.aboutUser}}'">
+            <a href="{{i.verifiedUser.aboutUser}}"><small>{{i.verifiedUser}}</small></a>
+            <a class="checkmark">✔</a>
+          </div>
+
+          {% endif %}
+
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p class="commentTimestamp"><time itemprop="dateCreated" datetime="{{i.timestamp}}">{{i.timestamp|timesince}} ago</time></p>
+            <p itemprop="text" class="myComment">{{i.commentText|urlize|linebreaksbr}}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Comments -->
+
+    <div class="moreComments">
+      <!-- Rest -->
+      {% for i in comment|slice:'1:' %}
+        <div class="suggestedAnswers">
+            {% if i.verifiedUser|lower == 'anonymous' %}
+            <a><small class="user">{{i.verifiedUser}}</small></a>
+            {% else %}
+            <div class="verifiedUser" onclick="window.location.href='{{i.verifiedUser.aboutUser}}'">
+              <a href="{{i.verifiedUser.aboutUser}}"><small>{{i.verifiedUser}}</small></a>
+              <a class="checkmark">✔</a>
+            </div>
+
+            {% endif %}
+            <div itemprop="suggestedAnswer" itemscope itemtype="https://schema.org/Answer">
+              <p class="commentTimestamp"><time itemprop="dateCreated" datetime="{{i.timestamp}}">{{i.timestamp|timesince}} ago</time></p>
+              <p itemprop="text" class="myComment">{{i.commentText|urlize|linebreaksbr}}</p>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+
+    <!-- Create comment -->
+
+    {% if comment.count <= 39 %}
+    <div id="createComment">
+      <form action="{% url 'postComment' question.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <textarea name="commentText" rows="4" minlength="5" required class="form-control" placeholder="Your answer..." id="commentText"></textarea>
+          {{form.captcha}}
+          <br>
+          <input type="submit" class="btn btn-default commentButton" value="Post">
+        </div>
+      </form>
+    </div>
+    {% endif %}
+
+    <br><br>
+
+  </div> <!-- col-sm-8 -->
+
+  <div class="col-sm-4">
+    <div class="moreLinks">
+      <a href="{% url 'randomQuestion' %}">🌍Random questions</a>
+      <br>
+      <a href="{% url 'changelog' %}">🆕Changelog</a>
+      <br>
+      <form action="{% url 'search' %}" method="get">
+        <input type="text" name="q" class="form-control form-control-sm mx-auto search" autocomplete="off" placeholder="Search qane">
+      </form>
+    </div>
+  </div>
+
+</div> <!-- row -->
+
+<h2>More questions</h2>
+
+<div class="latestQuestions" id="latestQuestions">
+  {% for i in otherQuestions %}
+  <div class="questions" onclick="window.location.href='{% url 'question' i.id i.slug|slice:255 %}'">
+    <h4><a href="{% url 'question' i.id i.slug|slice:255 %}" class="questionTitle">{{i.questionTitle}}</a></h4>
+    <p class="answerCount">
+      <i>
+        <small>💬 {{i.comments.count}} answers</small>
+      </i>
+    </p>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+{% endblock %}

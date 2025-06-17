@@ -1,0 +1,181 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block title %}Ask questions and receive answers - qane{% endblock %}
+{% block description %}Qane is a question-answer based website where anyone can ask and answer a question without logging in.{% endblock %}
+
+{% block head %}
+<meta name="google-site-verification" content="Pi6WpaV_YmeR5VNfLS695qAtv-FXFlwxA3YPfLms2J4" />
+
+{% endblock head %}
+
+
+{% block style %}
+
+.headSection{
+  max-width:700px;
+}
+
+h1{
+  margin:5px;
+  font-weight:bold;
+  color:white;
+  background-color:#FE2C55;
+  padding:5px;
+  border-radius:5px;
+  max-width:360px;
+}
+
+.searchBar{
+  margin:5px;
+}
+
+.textarea{
+  font-size:27px;
+  resize:none;
+  margin-top:2%;
+  width:80%;
+}
+
+.textarea:focus{
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(254, 44, 85, 0.15) 0px 0px 0px 1px;
+  border:1px solid #FE2C55;
+}
+
+.btn-default{
+  margin:5px;
+  background-color:#FE2C55;
+  color:white;
+  font-weight:bold;
+  width:270px;
+}
+
+.btn-default:hover{
+  color:#d5d5d5;
+  background-color:#c30127;
+}
+
+.questions{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+  border-radius:0px;
+  margin:5px 5px 15px 5px;
+  cursor:pointer;
+  word-wrap:break-word;
+  padding:10px 10px 0px 10px;
+}
+
+.questions:hover{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 1);
+}
+
+.questionTitle:hover{
+  text-decoration-line: none;
+  color:#444;
+}
+
+
+.answerCount{
+  color:#657786;
+  padding-bottom:4px;
+}
+
+.legal{
+  margin-top:20px !important;
+}
+
+{% endblock %}
+
+
+<!-- MOBILE FRIENDLY -->
+
+
+{% block mobilefriendly %}
+
+h1{
+  font-size:30px;
+}
+
+.textarea{
+  margin-top:5%;
+  width:100%;
+}
+
+.btn-default{
+  font-size:18px;
+  margin-bottom:10%;
+}
+
+
+{% endblock mobilefriendly %}
+
+{% block navHomeActive %}active{% endblock %}
+{% block currentHome %}<span class="sr-only">(current)</span>{% endblock %}
+
+{% block content %}
+<div class="headSection mx-auto text-center">
+  <noscript>
+    Turn on Javascript for full functionality:)
+  </noscript>
+  <h1 class="mx-auto">Ask anything🧠</h1>
+  <form action="{% url 'postQuestion' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <textarea name="questionTitle" class="form-control textarea mx-auto" minlength="5" maxlength="450" required placeholder="What is your favorite dish?" rows="2" cols="80"></textarea>
+      <input type="submit" class="btn btn-default" value="Ask!">
+    </div> <!-- form-group -->
+  </form>
+</div> <!-- headSection -->
+
+<br>
+<br>
+
+
+<div class="latestQuestions" id="latestQuestions">
+  {% for i in latestQuestions %}
+  <div class="questions" onclick="window.location.href='{% url 'question' i.id i.slug|slice:255 %}'">
+    <h4><a href="{% url 'question' i.id i.slug|slice:255 %}" class="questionTitle">{{i.questionTitle}}</a></h4>
+    {% for comment in i.comments.all|slice:":1" %}
+    <p class="comment">{{comment.commentText|slice:"400"}}...</p>
+    {% endfor %}
+    <p class="answerCount">
+      <i>
+        <small>💬 {{i.comments.count}} answers</small>
+      </i>
+    </p>
+  </div>
+  {% endfor %}
+</div>
+
+
+<noscript>
+  <hr>
+  <h3 class="text-danger text-center">Enable javascript to unlock infinite scrolling</h3>
+  <hr>
+</noscript>
+
+<script>
+  let pageNumber = 2;
+  function loadMoreQuestions(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        let div = document.createElement('div');
+        div.innerHTML = this.responseText;
+        const myQuestions = document.getElementById("latestQuestions");
+        myQuestions.appendChild(div);
+      }
+    };
+    xhttp.open("GET", "infiniteScroll?page="+pageNumber, true);
+    xhttp.send();
+  }
+
+  function onScroll() {
+    if (window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight - 50) {
+      loadMoreQuestions();
+      pageNumber = pageNumber + 1;
+    }
+  }
+  window.addEventListener("scroll", onScroll);
+</script>
+
+
+{% endblock %}

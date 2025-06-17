@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'index/images/icon.ico' %}">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-180459344-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-180459344-1');
+  </script>
+
+
+    {% block head %}{% endblock %}
+
+    <!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<style media="all">
+  body{
+    font-family:verdana, Arial !important;
+  }
+
+  a{
+    color:#444;
+  }
+
+  p{
+    color:#444;
+  }
+
+  ul{
+    color:#444;
+  }
+
+  .navbar{
+    margin-bottom:30px;
+    border-bottom:1px solid #e2e2e2;
+  }
+
+  .navbar a{
+    margin-top:-13px;
+    color:#FE2C55 !important;
+    text-decoration-line:none !important;
+    font-size:29px;
+    font-weight:bold;
+    user-select:none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+  }
+
+  .navbar form{
+    margin:5px;
+  }
+
+  .searchBarForm{
+    display:inline-block;
+  }
+
+  .searchBarBase:focus {
+    box-shadow: none;
+  }
+
+  .navbar a:hover{
+    opacity: 0.8;
+  }
+
+
+  {% block style %}
+  {% endblock %}
+
+
+  .legal{
+    margin-top:10%;
+    padding-top:10px;
+    padding-bottom:15px;
+    background-color: #F2F2F2;
+    box-shadow: 0 0 1px rgba(34, 25, 25, 1);
+  }
+
+  .legal a{
+    color:black;
+  }
+
+  @media only screen and (max-width:1000px){
+    .navbar a{
+      margin-top:-5px;
+    }
+    {% block mobilefriendly %}
+    {% endblock %}
+
+  }
+
+</style>
+  </head>
+  <body {% block bodyClass %}{% endblock %}>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
+      <div class="mx-auto">
+        <a href="{% url 'index' %}" class="p-0 navbar-text">qane</a>
+        <form action="{% url 'search' %}" method="get" class="searchBarForm">
+          <input type="text" name="q" class="form-control form-control-sm form-inline searchBarBase" autocomplete="off"  placeholder="Search qane">
+        </form>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      {% block content %}
+      {% endblock %}
+
+    </div> <!-- container -->
+
+
+    <div class="legal text-center">
+      <a href="{% url 'privacyPolicy' %}">Privacy policy</a>
+      <br>
+      <a href="{% url 'about' %}">About</a>
+      <br>
+      <br>
+      <p><small>qane.net © 2020-2022</small></p>
+    </div>
+
+  </body>
+</html>

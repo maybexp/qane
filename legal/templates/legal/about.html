@@ -1,0 +1,61 @@
+{% extends 'index/base.html' %}
+
+{% block title %}About - qane{% endblock %}
+{% block description %}About us{% endblock %}
+
+{% block style %}
+.row{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+}
+
+h1{
+  font-weight:bold;
+  color:#FE2C55;
+  font-size:1.9em;
+}
+
+h2{
+  font-size:1.9em;
+  font-weight:bold;
+  margin-bottom:20px;
+  color:#FE2C55;
+}
+
+hr{
+  margin-top:40px;
+}
+
+
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-sm-12 col-md-10 col-ls-6 mx-auto">
+    <h1 class="text-center">How it works</h1>
+    <br>
+    <p>Qane.net works by letting users anonymously ask questions. Once a question is asked, a maximum of 40 answers can be given before the thread is closed.
+      Answers with low quality may be deleted in order to prevent the thread from being spammed with bad answers.
+    </p>
+    <hr>
+    <h2 class="text-center">What are the blue check marks?</h2>
+    <p>The blue check marks are verified people. Comments get verified when they are made by people who fill at least 1 of the following conditions:</p>
+    <ul>
+      <li>Professor, celebrity, or other people known in their community</li>
+      <li>The person/brand talked about in said post</li>
+    </ul>
+
+    <hr>
+    <h2 class="text-center">Rules</h2>
+    <p>We usually delete content for the following reasons:</p>
+    <ul>
+      <li>For spreading misinformation</li>
+      <li>Illegal use of the site</li>
+      <li>Low quality</li>
+    </ul>
+
+    <hr>
+    <h2>Contact</h2>
+    <p>qane@tutamail.com</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="latestQuestions">
+  {% for i in latestQuestions %}
+  <div class="questions" onclick="window.location.href='{% url 'question' i.id i.slug|slice:255 %}'">
+    <h4><a href="{% url 'question' i.id i.slug|slice:255 %}" class="questionTitle">{{i.questionTitle}}</a></h4>
+    {% for comment in i.comments.all|slice:":1" %}
+    <p class="comment">{{comment.commentText|slice:"400"}}...</p>
+    {% endfor %}
+    <p class="answerCount">
+      <i>
+        <small>💬 {{i.comments.count}} answers</small>
+      </i>
+    </p>
+  </div>
+  {% endfor %}
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /random-question/
+Disallow: /latest/
+Disallow: /search/

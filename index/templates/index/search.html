@@ -1,0 +1,62 @@
+{% extends 'index/base.html' %}
+
+{% block head %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block style %}
+.latestQuestions{
+  margin-bottom:250px;
+}
+
+.questions{
+  width:80%;
+  box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+  border-radius:0px;
+  margin:5px 5px 15px 5px;
+  cursor:pointer;
+  display:block;
+  word-wrap:break-word;
+  padding:10px 10px 0px 10px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.questions:hover{
+  box-shadow: 0 0 1px rgba(34, 25, 25, 1);
+}
+
+.questionTitle:hover{
+  text-decoration-line: none;
+  color:#444;
+}
+
+.answerCount{
+  color:#657786;
+}
+{% endblock %}
+
+{% block mobilefriendly %}
+.questions{
+  width:100%;
+}
+{% endblock %}
+
+
+{% block content %}
+<div class="latestQuestions" id="latestQuestions">
+  {% for i in question %}
+  <div class="questions" onclick="window.location.href='{% url 'question' i.id i.slug|slice:255 %}'">
+    <h4><a href="{% url 'question' i.id i.slug|slice:255 %}" class="questionTitle">{{i.questionTitle}}</a></h4>
+    {% for comment in i.comments.all|slice:":1" %}
+    <p class="comment">{{comment.commentText|slice:"400"}}...</p>
+    {% endfor %}
+    <p class="answerCount">
+      <i>
+        <small>💬 {{i.comments.count}} answers</small>
+      </i>
+    </p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
