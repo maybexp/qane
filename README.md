@@ -6,6 +6,15 @@ It served as an anonymous, privacy-oriented alternative to Quora, created after 
 
 ![img_2.png](img_2.png)
 
+Features:
+- Infinite scrolling
+- Ask & questions
+- A random page that shows a random question asked on qane, for each refresh
+- Admin panel
+- Captcha (The one used is bad, Cloudflare Turnstile or ReCAPTACHA are better options)
+- Search function
+- Changelog
+
 How to run in terminal:
 
 1. git clone https://github.com/maybexp/qane.git
