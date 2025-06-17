@@ -8,7 +8,7 @@ It served as an anonymous, privacy-oriented alternative to Quora, created after 
 
 Features:
 - Infinite scrolling
-- Ask & answer questions
+- Ask and answer questions
 - A random page that shows a random question asked on qane for each refresh
 - Admin panel
 - Captcha (The one used is bad, Cloudflare Turnstile or ReCAPTACHA are better options)
