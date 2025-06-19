@@ -6,7 +6,7 @@ It served as an anonymous, privacy-oriented alternative to Quora, created after 
 
 ![img_2.png](img_2.png)
 
-Features:
+## Features:
 - Infinite scrolling
 - Ask and answer questions
 - A random page that shows a random question asked on qane for each refresh
